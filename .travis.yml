@@ -1,8 +1,8 @@
 language: julia
 os:
-  - linux
+- linux
 julia:
-  - 0.6
+- 0.6
 notifications:
   email: false
 git:
@@ -10,18 +10,21 @@ git:
 cache:
   timeout: 1000
   directories:
-    - downloads
+  - downloads
 env:
   global:
-    - BINARYBUILDER_DOWNLOADS_CACHE=downloads
-    - BINARYBUILDER_AUTOMATIC_APPLE=false
+  - BINARYBUILDER_DOWNLOADS_CACHE=downloads
+  - BINARYBUILDER_AUTOMATIC_APPLE=false
 sudo: required
-
-# Before anything else, get the latest versions of things
 before_script:
-  - julia -e 'Pkg.clone("https://github.com/JuliaPackaging/BinaryProvider.jl")'
-  - julia -e 'Pkg.clone("https://github.com/JuliaPackaging/BinaryBuilder.jl"); Pkg.build()'
-
+- julia -e 'Pkg.clone("https://github.com/JuliaPackaging/BinaryProvider.jl")'
+- julia -e 'Pkg.clone("https://github.com/JuliaPackaging/BinaryBuilder.jl"); Pkg.build()'
 script:
-  - julia build_tarballs.jl
-
+- julia build_tarballs.jl
+deploy:
+  provider: releases
+  api_key:
+    secure: WaDDlNlaL3hY9r0R4Y/TS3aVjqDQFkUBDaAVOgmBLN5MiNeGXOZ2Dmh8nS0/0IvJSJf8VOBiHIiYrUwB97VRAUJedE7I9vCly0kDix4uu/GDUav8oimUu9vdP4HHR2jZhK/jYv41Xi9+egXuWKjBNU3aPhjRXrkv+uCWuAJBE5+qJHlR5NJbjtYCaVEsedPnYNjVNHBleJI7QRyqkScp6UikaT9HnKu6tQSJRcUfpxiAJCL/MZqPEifXLUG7U2d4roLtTjLcZnQmtikGNWPOGcK8JrbiBwtPtl6X3WevcPa5c89HgmzS7Lakgcla+leiM1GzJVFfQG8ufBoGmBY0P563wbouV9YJM/2WOk2FomqWsE9Qq2Af/cLjoOdZ8H1ZftBTz9YkaClyFTampxslO3n2Y+974DjLB1C/VkYDb5rjAk598ja5Aisc2AGJsVJny8WIbEXf9tAzGUYY7TDib4rAptvso+jaIwnIsZupEzfipe6OEPyIIHBdWABHZVsxDlX0TrKj4ajF5zigS4xa5RwXwCslCXlUvg5zQohMmlUzePRRo6paN1N6KCxbGRBspnX+cYELS8RGO+RcUNFfkoB581/M7tz/8btzsOoW3GNo405zNiE46DE229CGP17IjaCd0HT5seieWYc/ruTgKmANEBDF5INRjm36l/G0SPY=
+  file: products/*
+  on:
+    repo: JuliaIO/ImageMagickBuilder
