@@ -13,11 +13,15 @@ sources = [
 script = raw"""
 cd $WORKSPACE/srcdir
 cd ImageMagick6/
-./configure --prefix=$prefix --host=$target
+configure_args=""
+if [[ "${target}" == *mingw32 ]]; then
+   export LDFLAGS="-lws2_32"
+   configure_args="--disable-threads"
+fi
+./configure --prefix=$prefix --host=$target ${configure_args}
 make -j${nproc}
 make install
 exit
-
 """
 
 # These are the platforms we will build for by default, unless further
@@ -33,7 +37,9 @@ platforms = [
     Linux(:aarch64, :musl),
     Linux(:armv7l, :musl, :eabihf),
     MacOS(:x86_64),
-    FreeBSD(:x86_64)
+    FreeBSD(:x86_64),
+    Windows(:i686),
+    Windows(:x86_64)
 ]
 
 # The products that we will ensure are always built
