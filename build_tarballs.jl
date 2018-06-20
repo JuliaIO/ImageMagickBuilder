@@ -2,24 +2,18 @@
 # `julia build_tarballs.jl --help` to see a usage message.
 using BinaryBuilder
 
-# Collection of sources required to build ImageMagick
+# Collection of sources required to build imagemagick
 sources = [
     "https://github.com/ImageMagick/ImageMagick6.git" =>
-    "00097eb42c2ea812d4a26e6683b000d4354f5fad",
-
+    "f6d81c5682360e87ec74f55978625fea581c330e",
 ]
 
 # Bash recipe for building across all platforms
 script = raw"""
 cd $WORKSPACE/srcdir
 cd ImageMagick6/
-configure_args=""
-if [[ "${target}" == *mingw32 ]]; then
-   export LDFLAGS="-lws2_32"
-   configure_args="--disable-threads"
-fi
-./configure --prefix=$prefix --host=$target ${configure_args}
-make -j${nproc}
+./configure --prefix=$prefix --host=$target
+make -j${ncore}
 make install
 exit
 """
@@ -44,9 +38,9 @@ platforms = [
 
 # The products that we will ensure are always built
 products(prefix) = [
-    LibraryProduct(prefix, "libMagickWand", :libmagick),
+    LibraryProduct(prefix, "libMagickWand", :libwand),
     LibraryProduct(prefix, "libMagickCore", :libmagickcore),
-    LibraryProduct(prefix, "libMagick++", :libmagickwand)
+    LibraryProduct(prefix, "libMagick++", :libmagick)
 ]
 
 # Dependencies that must be installed before this package can be built
@@ -55,5 +49,4 @@ dependencies = [
 ]
 
 # Build the tarballs, and possibly a `build.jl` as well.
-build_tarballs(ARGS, "ImageMagick", sources, script, platforms, products, dependencies)
-
+build_tarballs(ARGS, "imagemagick", sources, script, platforms, products, dependencies)
