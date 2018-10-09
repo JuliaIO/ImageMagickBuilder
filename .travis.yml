@@ -2,7 +2,7 @@ language: julia
 os:
   - linux
 julia:
-  - 0.6
+  - 1.0
 notifications:
   email: false
 git:
@@ -10,28 +10,24 @@ git:
 cache:
   timeout: 1000
   directories:
-  - downloads
+    - downloads
 env:
   global:
-  - BINARYBUILDER_DOWNLOADS_CACHE=downloads
-  - BINARYBUILDER_AUTOMATIC_APPLE=true
-  # Our build takes too long for one job, so split targets across multiple jobs
-  matrix:
-    - PART=1/5
-    - PART=2/5
-    - PART=3/5
-    - PART=4/5
-    - PART=5/5
+    - BINARYBUILDER_DOWNLOADS_CACHE=downloads
+    - BINARYBUILDER_AUTOMATIC_APPLE=true
+    matrix:
+    - PART=1/8
+    - PART=2/8
+    - PART=3/8
+    - PART=4/8
+    - PART=5/8
+    - PART=6/8
+    - PART=7/8
+    - PART=8/8
 sudo: required
-jobs:
-  include:
-    - stage: regenerate build.jl
-      script: julia build_tarballs.jl --only-buildjl
-      if: tag IS present
 before_script:
-  - julia -e 'Pkg.add("BinaryProvider.jl")'
-  - julia -e 'Pkg.add("BinaryBuilder.jl"); Pkg.checkout("BinaryBuilder")'
-  - julia -e 'Pkg.build()'
+  - julia -e 'import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaPackaging/BinaryBuilder.jl", rev="master"))'
+  - julia -e 'import Pkg; Pkg.add("BinaryProvider")'
 script:
   - julia build_tarballs.jl --part=$PART
 deploy:

@@ -2,18 +2,18 @@
 # `julia build_tarballs.jl --help` to see a usage message.
 using BinaryBuilder
 name = "ImageMagick"
-version = v"6.9.10-10"
+version = v"6.9.10-12"
 # Collection of sources required to build imagemagick
 sources = [
     "https://github.com/ImageMagick/ImageMagick6.git" =>
-    "5b78c19877f59bfdd5d99a38991a5f291c9ea0c2",
+    "d9d6f94ba8a40ca50d3b2fb748c1ec3014e335ef",
 ]
 
 # Bash recipe for building across all platforms
 script = raw"""
 cd $WORKSPACE/srcdir
 cd ImageMagick6/
-./configure --prefix=$prefix --host=$target --disable-openmp --disable-install --disable-dependency-tracking --without-frozenpaths --without-perl
+./configure  LDFLAGS="-all-static" --prefix=$prefix --host=$target --disable-openmp --disable-install --disable-dependency-tracking --without-frozenpaths --without-perl
 make -j${ncore}
 make install
 
@@ -45,7 +45,7 @@ products(prefix) = [
 # Dependencies that must be installed before this package can be built
 dependencies = [
     "https://github.com/bicycle1885/ZlibBuilder/releases/download/v1.0.2/build_Zlib.v1.2.11.jl",
-    "https://github.com/SimonDanisch/LibpngBuilder/releases/download/1.0.0/build_libpng.v1.6.31.jl",
+    "https://github.com/SimonDanisch/LibpngBuilder/releases/download/v1.0.1/build_libpng.v1.6.31.jl",
     "https://github.com/SimonDanisch/LibJPEGBuilder/releases/download/v9b/build_libjpeg.v9.0.0-b.jl",
     "https://github.com/SimonDanisch/LibTIFFBuilder/releases/download/v1.0.0/build_libtiff.v4.0.9.jl"
 ]
