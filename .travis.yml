@@ -16,14 +16,14 @@ env:
     - BINARYBUILDER_DOWNLOADS_CACHE=downloads
     - BINARYBUILDER_AUTOMATIC_APPLE=true
     matrix:
-    - PART=1/8
-    - PART=2/8
-    - PART=3/8
-    - PART=4/8
-    - PART=5/8
-    - PART=6/8
-    - PART=7/8
-    - PART=8/8
+      - PART=1/8
+      - PART=2/8
+      - PART=3/8
+      - PART=4/8
+      - PART=5/8
+      - PART=6/8
+      - PART=7/8
+      - PART=8/8
 sudo: required
 before_script:
   - julia -e 'import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaPackaging/BinaryBuilder.jl", rev="master"))'
