@@ -15,19 +15,12 @@ env:
   global:
     - BINARYBUILDER_DOWNLOADS_CACHE=downloads
     - BINARYBUILDER_AUTOMATIC_APPLE=true
-    matrix:
-      - PART=1/6
-      - PART=2/6
-      - PART=3/6
-      - PART=4/6
-      - PART=5/6
-      - PART=6/6
 sudo: required
 before_script:
   - julia -e 'import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaPackaging/BinaryBuilder.jl", rev="master"))'
   - julia -e 'import Pkg; Pkg.add("BinaryProvider")'
 script:
-  - julia build_tarballs.jl --part=$PART
+  - julia build_tarballs.jl
 deploy:
   provider: releases
   api_key:
