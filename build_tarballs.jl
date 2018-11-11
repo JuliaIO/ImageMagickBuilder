@@ -16,20 +16,6 @@ cd ImageMagick6/
 ./configure  LDFLAGS="-all-static" --prefix=$prefix --host=$target --disable-openmp --disable-install --disable-dependency-tracking --without-frozenpaths --without-perl
 make -j${ncore}
 make install
-
-if [[ ${target} == "x86_64-apple-darwin14" ]]; then
-    echo "-- Modifying link references for ImageMagick libraries"
-    opts=""
-    # for some reason libtiff and libpng don't need help?
-    for XLIB in libMagick++-6.Q16.8 libMagickCore-6.Q16.6 libMagickWand-6.Q16.6 libjpeg.9 libz.1
-    do
-  	  opts="${opts} -change ${WORKSPACE}/destdir/lib/${XLIB}.dylib @rpath/${XLIB}.dylib"
-    done
-    for YLIB in libMagickWand-6.Q16.6 libMagickCore-6.Q16.6 libMagick++-6.Q16.8
-    do
-	  install_name_tool ${opts} ${prefix}/lib/${YLIB}.dylib
-    done
-fi
 exit
 """
 
