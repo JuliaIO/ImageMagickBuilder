@@ -13,7 +13,7 @@ sources = [
 script = raw"""
 cd $WORKSPACE/srcdir
 cd ImageMagick6/
-./configure  LDFLAGS="-all-static" --prefix=$prefix --host=$target --disable-openmp --disable-install --disable-dependency-tracking --without-frozenpaths --without-perl
+./configure --prefix=$prefix --host=$target --disable-openmp --disable-install --disable-dependency-tracking --without-frozenpaths --without-perl
 make -j${ncore}
 make install
 
