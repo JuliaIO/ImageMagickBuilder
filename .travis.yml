@@ -11,14 +11,16 @@ cache:
   timeout: 1000
   directories:
     - downloads
+    - shards
 env:
   global:
     - BINARYBUILDER_DOWNLOADS_CACHE=downloads
+    - BINARYBUILDER_SHARDS_DIR=shards
     - BINARYBUILDER_AUTOMATIC_APPLE=true
+    - BINARYBUILDER_USE_CCACHE=true
 sudo: required
 before_script:
-  - julia -e 'import Pkg; Pkg.add(Pkg.PackageSpec(url="https://github.com/JuliaPackaging/BinaryBuilder.jl", rev="master"))'
-  - julia -e 'import Pkg; Pkg.add("BinaryProvider")'
+  - julia -e 'using Pkg; Pkg.add("BinaryProvider"); Pkg.add(PackageSpec(name="BinaryBuilder", rev="master")); Pkg.build()'
 script:
   - julia build_tarballs.jl
 deploy:
