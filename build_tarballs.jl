@@ -48,9 +48,9 @@ products(prefix) = [
 # Dependencies that must be installed before this package can be built
 dependencies = [
     "https://github.com/bicycle1885/ZlibBuilder/releases/download/v1.0.4/build_Zlib.v1.2.11.jl",
-    "https://github.com/SimonDanisch/LibpngBuilder/releases/download/v1.0.2/build_libpng.v1.6.31.jl",
-    "https://github.com/SimonDanisch/LibJPEGBuilder/releases/download/v9b/build_libjpeg.v9.0.0-b.jl",
-    "https://github.com/SimonDanisch/LibTIFFBuilder/releases/download/v5/build_libtiff.v4.0.9.jl"
+    "https://github.com/SimonDanisch/LibpngBuilder/releases/download/v1.0.3/build_libpng.v1.6.37.jl",
+    "https://github.com/SimonDanisch/LibJPEGBuilder/releases/download/v10/build_libjpeg.v9.0.0-b.jl",
+    "https://github.com/SimonDanisch/LibTIFFBuilder/releases/download/v6/build_libtiff.v4.0.9.jl"
 ]
 
 # Build the tarballs, and possibly a `build.jl` as well.
